@@ -643,9 +643,22 @@ function saveResult(sc, answers) {
   }).catch(() => {});
 }
 
-function loadDashboard() {
+async function loadDashboard() {
   const container = document.getElementById('dash-inner');
   container.innerHTML = '<div class="dash-loading">Loading results…</div>';
+  try {
+    // Try fetch first (works if Apps Script returns CORS headers)
+    const res = await fetch(SHEET_URL);
+    if (!res.ok) throw new Error('fetch failed');
+    const rows = await res.json();
+    renderDashboard(rows, container);
+  } catch {
+    // Fall back to JSONP
+    loadDashboardJsonp(container);
+  }
+}
+
+function loadDashboardJsonp(container) {
   const cb = '__sq_' + Date.now();
   const script = document.createElement('script');
   const timeout = setTimeout(() => {
