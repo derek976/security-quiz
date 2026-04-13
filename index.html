@@ -675,8 +675,6 @@ function renderDashboard(rows, container) {
     return;
   }
 
-  const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
-  const todayEnd   = new Date(); todayEnd.setHours(23, 59, 59, 999);
   const data = rows.slice(1).map(r => ({
     timestamp: r[0],
     userId:    String(r[1]),
@@ -684,11 +682,7 @@ function renderDashboard(rows, container) {
     score:     Number(r[3]),
     total:     Number(r[4]) || questions.length,
     answers:   [Number(r[6]), Number(r[7]), Number(r[8]), Number(r[9]), Number(r[10])]
-  })).filter(r => {
-    if (isNaN(r.score)) return false;
-    const ts = new Date(r.timestamp);
-    return ts >= todayStart && ts <= todayEnd;
-  });
+  })).filter(r => !isNaN(r.score));
 
   if (!data.length) {
     container.innerHTML = '<div class="dash-empty">No results today yet — be the first to complete the quiz!</div>';
