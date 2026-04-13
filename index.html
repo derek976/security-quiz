@@ -643,17 +643,29 @@ function saveResult(sc, answers) {
   }).catch(() => {});
 }
 
-async function loadDashboard() {
+function loadDashboard() {
   const container = document.getElementById('dash-inner');
   container.innerHTML = '<div class="dash-loading">Loading results…</div>';
-  try {
-    const res = await fetch(SHEET_URL);
-    if (!res.ok) throw new Error('network error');
-    const rows = await res.json();
-    renderDashboard(rows, container);
-  } catch {
+  const cb = '__sq_' + Date.now();
+  const script = document.createElement('script');
+  const timeout = setTimeout(() => {
+    delete window[cb];
+    script.remove();
     container.innerHTML = '<div class="dash-error">Could not load results. Check your connection and try again.</div>';
-  }
+  }, 10000);
+  window[cb] = rows => {
+    clearTimeout(timeout);
+    delete window[cb];
+    script.remove();
+    renderDashboard(rows, container);
+  };
+  script.onerror = () => {
+    clearTimeout(timeout);
+    delete window[cb];
+    container.innerHTML = '<div class="dash-error">Could not load results. Check your connection and try again.</div>';
+  };
+  script.src = SHEET_URL + '?callback=' + cb;
+  document.head.appendChild(script);
 }
 
 // ── Dashboard rendering ────────────────────────────────────────
