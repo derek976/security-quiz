@@ -36,8 +36,78 @@
     flex-shrink: 0;
   }
   .shield svg { width: 20px; height: 20px; fill: #fff; }
+  .header-info { flex: 1; }
   header h1 { font-size: 18px; font-weight: 600; color: #f0f0f0; }
-  header p { font-size: 13px; color: #8b8fa8; margin-top: 2px; }
+  header p  { font-size: 13px; color: #8b8fa8; margin-top: 2px; }
+  .btn-link {
+    background: none;
+    border: 1.5px solid #2a2d3a;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: #8b8fa8;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-link:hover { border-color: #4a5080; color: #d0d2e0; }
+
+  /* ── Start page ── */
+  .start-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+  .start-card {
+    background: #1a1d27;
+    border: 1px solid #2a2d3a;
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+  }
+  .start-card h2 { font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+  .start-card p  { font-size: 14px; color: #8b8fa8; margin-bottom: 28px; line-height: 1.6; }
+  .name-input {
+    width: 100%;
+    background: #12141c;
+    border: 1.5px solid #2a2d3a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 15px;
+    color: #f0f0f0;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .name-input:focus { border-color: #2563eb; }
+  .name-input::placeholder { color: #5a5e7a; }
+  .btn-start {
+    width: 100%;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 14px;
+  }
+  .btn-start:hover { background: #1d4ed8; }
+  .btn-text-link {
+    background: none;
+    border: none;
+    font-size: 13px;
+    color: #5a5e7a;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.15s;
+  }
+  .btn-text-link:hover { color: #d0d2e0; }
 
   /* ── Quiz page ── */
   .quiz-body {
@@ -48,7 +118,6 @@
     justify-content: center;
     padding: 40px 24px;
   }
-
   .q-card {
     background: #1a1d27;
     border: 1px solid #2a2d3a;
@@ -57,44 +126,25 @@
     width: 100%;
     max-width: 740px;
   }
-
-  .q-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
+  .q-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
   .q-num {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: #8b8fa8;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; color: #8b8fa8;
     text-transform: uppercase;
   }
   .progress-track {
-    flex: 1;
-    height: 4px;
-    background: #2a2d3a;
-    border-radius: 4px;
-    overflow: hidden;
+    flex: 1; height: 4px;
+    background: #2a2d3a; border-radius: 4px; overflow: hidden;
   }
   .progress-fill {
-    height: 100%;
-    background: #2563eb;
-    border-radius: 4px;
-    transition: width 0.4s ease;
+    height: 100%; background: #2563eb;
+    border-radius: 4px; transition: width 0.4s ease;
   }
-
   .q-text {
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 1.45;
-    color: #f0f0f0;
-    margin-bottom: 28px;
+    font-size: 22px; font-weight: 600;
+    line-height: 1.45; color: #f0f0f0; margin-bottom: 28px;
   }
-
   .options { display: flex; flex-direction: column; gap: 10px; }
-
   .opt {
     background: #12141c;
     border: 1.5px solid #2a2d3a;
@@ -110,99 +160,58 @@
     transition: border-color 0.15s, background 0.15s;
     line-height: 1.5;
   }
-  .opt:hover:not(:disabled) {
-    border-color: #3b4bdb;
-    background: #1a1d35;
-  }
+  .opt:hover:not(:disabled) { border-color: #3b4bdb; background: #1a1d35; }
   .opt .letter {
-    font-weight: 700;
-    font-size: 14px;
-    color: #5a5e7a;
-    min-width: 22px;
-    margin-top: 1px;
-    flex-shrink: 0;
+    font-weight: 700; font-size: 14px; color: #5a5e7a;
+    min-width: 22px; margin-top: 1px; flex-shrink: 0;
   }
   .opt.correct { border-color: #16a34a; background: #0d2a1a; }
   .opt.correct .letter { color: #4ade80; }
-  .opt.wrong { border-color: #dc2626; background: #2a0d0d; }
+  .opt.wrong   { border-color: #dc2626; background: #2a0d0d; }
   .opt.wrong .letter { color: #f87171; }
-  .opt.reveal { border-color: #16a34a; background: #0d2a1a; opacity: 0.65; }
+  .opt.reveal  { border-color: #16a34a; background: #0d2a1a; opacity: 0.65; }
   .opt.reveal .letter { color: #4ade80; }
-
   .explanation {
-    margin-top: 20px;
-    padding: 16px 18px;
-    background: #12141c;
-    border-left: 3px solid #2563eb;
+    margin-top: 20px; padding: 16px 18px;
+    background: #12141c; border-left: 3px solid #2563eb;
     border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    line-height: 1.65;
-    color: #a0a4ba;
+    font-size: 14px; line-height: 1.65; color: #a0a4ba;
   }
-
-  .q-footer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 24px;
-  }
-
+  .q-footer { display: flex; justify-content: flex-end; margin-top: 24px; }
   .btn-next {
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 28px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s;
+    background: #2563eb; color: #fff; border: none;
+    border-radius: 10px; padding: 12px 28px;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s;
   }
   .btn-next:hover { background: #1d4ed8; }
 
   /* ── Results page ── */
   .results-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 48px 24px 60px;
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; padding: 48px 24px 60px;
   }
-
-  .score-hero {
-    text-align: center;
-    margin-bottom: 44px;
-  }
+  .score-hero { text-align: center; margin-bottom: 44px; }
   .score-circle {
-    width: 110px; height: 110px;
-    border-radius: 50%;
-    background: #1a1d27;
-    border: 4px solid #2563eb;
+    width: 110px; height: 110px; border-radius: 50%;
+    background: #1a1d27; border: 4px solid #2563eb;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     margin: 0 auto 20px;
   }
-  .score-num { font-size: 34px; font-weight: 700; color: #f0f0f0; line-height: 1; }
+  .score-num   { font-size: 34px; font-weight: 700; color: #f0f0f0; line-height: 1; }
   .score-denom { font-size: 13px; color: #8b8fa8; margin-top: 2px; }
   .score-title { font-size: 24px; font-weight: 600; color: #f0f0f0; margin-bottom: 8px; }
-  .score-msg { font-size: 15px; color: #8b8fa8; max-width: 440px; line-height: 1.6; }
-
+  .score-msg   { font-size: 15px; color: #8b8fa8; max-width: 440px; line-height: 1.6; }
   .results-grid {
-    width: 100%;
-    max-width: 740px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 36px;
+    width: 100%; max-width: 740px;
+    display: flex; flex-direction: column;
+    gap: 14px; margin-bottom: 36px;
   }
-
   .result-row {
-    background: #1a1d27;
-    border: 1px solid #2a2d3a;
-    border-radius: 12px;
-    padding: 18px 22px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
+    background: #1a1d27; border: 1px solid #2a2d3a;
+    border-radius: 12px; padding: 18px 22px;
+    display: flex; gap: 14px; align-items: flex-start;
   }
   .result-icon {
     width: 28px; height: 28px; border-radius: 50%;
@@ -213,39 +222,157 @@
   .result-icon.pass { background: #0d2a1a; color: #4ade80; }
   .result-icon.fail { background: #2a0d0d; color: #f87171; }
   .result-content { flex: 1; }
-  .result-q { font-size: 14px; font-weight: 600; color: #d0d2e0; margin-bottom: 6px; line-height: 1.4; }
+  .result-q      { font-size: 14px; font-weight: 600; color: #d0d2e0; margin-bottom: 6px; line-height: 1.4; }
   .result-answer { font-size: 13px; color: #8b8fa8; line-height: 1.5; }
-  .result-answer strong { color: #4ade80; font-weight: 500; }
+  .result-answer strong     { color: #4ade80; font-weight: 500; }
   .result-answer .wrong-ans { color: #f87171; }
-
+  .results-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
   .btn-restart {
-    background: transparent;
-    color: #a0a4ba;
-    border: 1.5px solid #2a2d3a;
-    border-radius: 10px;
-    padding: 12px 32px;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
+    background: transparent; color: #a0a4ba;
+    border: 1.5px solid #2a2d3a; border-radius: 10px;
+    padding: 12px 28px; font-size: 15px; font-weight: 500;
+    cursor: pointer; transition: border-color 0.15s, color 0.15s;
   }
   .btn-restart:hover { border-color: #4a5080; color: #d0d2e0; }
+  .btn-dashboard {
+    background: #2563eb; color: #fff; border: none;
+    border-radius: 10px; padding: 12px 28px;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .btn-dashboard:hover { background: #1d4ed8; }
+
+  /* ── Dashboard page ── */
+  .dash-body {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; padding: 40px 24px 60px;
+  }
+  .dash-inner { width: 100%; max-width: 900px; }
+
+  .dash-section-title {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #5a5e7a; margin-bottom: 12px; margin-top: 32px;
+  }
+  .dash-section-title:first-child { margin-top: 0; }
+
+  /* Summary cards */
+  .summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  .summary-card {
+    background: #1a1d27; border: 1px solid #2a2d3a;
+    border-radius: 12px; padding: 20px; text-align: center;
+  }
+  .summary-val {
+    font-size: 30px; font-weight: 700;
+    color: #f0f0f0; line-height: 1; margin-bottom: 6px;
+  }
+  .summary-val span { font-size: 15px; color: #8b8fa8; }
+  .summary-label {
+    font-size: 12px; color: #8b8fa8;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* Leaderboard */
+  .leaderboard {
+    background: #1a1d27; border: 1px solid #2a2d3a;
+    border-radius: 12px; overflow: hidden;
+  }
+  .lb-row {
+    display: grid;
+    grid-template-columns: 36px 1fr 80px 60px 110px;
+    gap: 12px; padding: 13px 20px;
+    align-items: center;
+    border-bottom: 1px solid #2a2d3a;
+    font-size: 14px;
+  }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row.lb-header {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    color: #5a5e7a; background: #12141c;
+  }
+  .lb-row.lb-me { background: #1a2040; border-left: 3px solid #2563eb; padding-left: 17px; }
+  .lb-rank { color: #5a5e7a; font-weight: 600; }
+  .lb-name { color: #d0d2e0; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lb-score { text-align: center; font-weight: 700; }
+  .lb-tries { text-align: center; color: #8b8fa8; }
+  .lb-date  { color: #5a5e7a; font-size: 12px; }
+  .you-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 600;
+    background: #1e3a8a; color: #93c5fd;
+    border-radius: 4px; padding: 1px 5px;
+    margin-left: 6px; vertical-align: middle;
+  }
+
+  /* Per-question accuracy */
+  .accuracy-list { display: flex; flex-direction: column; gap: 10px; }
+  .accuracy-row {
+    background: #1a1d27; border: 1px solid #2a2d3a;
+    border-radius: 10px; padding: 14px 18px;
+  }
+  .accuracy-top {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 8px;
+  }
+  .accuracy-q   { font-size: 13px; color: #d0d2e0; font-weight: 500; flex: 1; padding-right: 16px; }
+  .accuracy-pct { font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  .accuracy-bar-track { height: 6px; background: #2a2d3a; border-radius: 4px; overflow: hidden; }
+  .accuracy-bar-fill  { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+
+  /* States */
+  .dash-loading, .dash-empty { text-align: center; padding: 60px 0; color: #5a5e7a; font-size: 14px; }
+  .dash-error                { text-align: center; padding: 60px 0; color: #f87171;  font-size: 14px; }
+
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    .q-card { padding: 24px 20px; }
+    .q-text { font-size: 18px; }
+    .lb-row { grid-template-columns: 28px 1fr 64px 48px; }
+    .lb-date { display: none; }
+  }
 </style>
 </head>
 <body>
 
-<!-- ══════════ PAGE 1: QUIZ ══════════ -->
-<div class="page active" id="page-quiz">
+<!-- ══════════ PAGE 0: START ══════════ -->
+<div class="page active" id="page-start">
   <header>
     <div class="shield">
       <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-5z"/></svg>
     </div>
-    <div>
+    <div class="header-info">
       <h1>Personal digital security</h1>
       <p>Leadership awareness quiz</p>
     </div>
   </header>
+  <div class="start-body">
+    <div class="start-card">
+      <h2>Welcome</h2>
+      <p>Test your personal security awareness with 5 quick questions. Enter your name so your score appears on the leaderboard.</p>
+      <input id="name-input" class="name-input" type="text" placeholder="Your name (optional)" maxlength="30">
+      <button class="btn-start" onclick="startQuiz()">Start quiz →</button>
+      <button class="btn-text-link" onclick="showDashboard()">View leaderboard</button>
+    </div>
+  </div>
+</div>
 
+<!-- ══════════ PAGE 1: QUIZ ══════════ -->
+<div class="page" id="page-quiz">
+  <header>
+    <div class="shield">
+      <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-5z"/></svg>
+    </div>
+    <div class="header-info">
+      <h1>Personal digital security</h1>
+      <p>Leadership awareness quiz</p>
+    </div>
+    <button class="btn-link" onclick="showDashboard()">Leaderboard</button>
+  </header>
   <div class="quiz-body">
     <div class="q-card">
       <div class="q-meta">
@@ -268,12 +395,12 @@
     <div class="shield">
       <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-5z"/></svg>
     </div>
-    <div>
+    <div class="header-info">
       <h1>Quiz results</h1>
       <p>Personal digital security — leadership awareness</p>
     </div>
+    <button class="btn-link" onclick="showDashboard()">Leaderboard</button>
   </header>
-
   <div class="results-body">
     <div class="score-hero">
       <div class="score-circle">
@@ -283,13 +410,36 @@
       <div class="score-title" id="res-title">Results</div>
       <div class="score-msg" id="res-msg"></div>
     </div>
-
     <div class="results-grid" id="results-grid"></div>
-    <button class="btn-restart" onclick="restart()">← Restart quiz</button>
+    <div class="results-actions">
+      <button class="btn-restart" onclick="restart()">← Take again</button>
+      <button class="btn-dashboard" onclick="showDashboard()">View leaderboard →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 3: DASHBOARD ══════════ -->
+<div class="page" id="page-dashboard">
+  <header>
+    <div class="shield">
+      <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-5z"/></svg>
+    </div>
+    <div class="header-info">
+      <h1>Leaderboard</h1>
+      <p>Personal digital security — all results</p>
+    </div>
+    <button class="btn-link" onclick="showPage('page-start')">← Take quiz</button>
+  </header>
+  <div class="dash-body">
+    <div class="dash-inner" id="dash-inner">
+      <div class="dash-loading">Loading results…</div>
+    </div>
   </div>
 </div>
 
 <script>
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzs0rwMsqkQ8UDjCKJJdRaIS3U9BkcmjrXlWJGPvmmt0COYiq77CWNqvL4HpXVCBhiV5g/exec';
+
 const questions = [
   {
     q: "Should I plug my phone's USB cable into an airport USB charging station?",
@@ -348,11 +498,45 @@ const questions = [
   }
 ];
 
-let current = 0;
-let score = 0;
-let answered = false;
-let userAnswers = [];
+// ── User identity ──────────────────────────────────────────────
+let userId = localStorage.getItem('sqUserId');
+if (!userId) {
+  userId = crypto.randomUUID();
+  localStorage.setItem('sqUserId', userId);
+}
+let displayName = localStorage.getItem('sqName') || '';
 
+document.addEventListener('DOMContentLoaded', () => {
+  if (displayName) document.getElementById('name-input').value = displayName;
+});
+
+// ── Quiz state ─────────────────────────────────────────────────
+let current = 0, score = 0, answered = false, userAnswers = [];
+
+// ── Navigation ─────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startQuiz() {
+  const val = document.getElementById('name-input').value.trim().slice(0, 30);
+  displayName = val || 'Anonymous';
+  localStorage.setItem('sqName', displayName);
+  current = 0; score = 0; answered = false; userAnswers = [];
+  renderQ();
+  showPage('page-quiz');
+}
+
+function restart() { showPage('page-start'); }
+
+function showDashboard() {
+  showPage('page-dashboard');
+  loadDashboard();
+}
+
+// ── Quiz rendering ─────────────────────────────────────────────
 function renderQ() {
   const q = questions[current];
   const pct = Math.round((current / questions.length) * 100);
@@ -385,9 +569,7 @@ function pick(idx) {
   const q = questions[current];
   const btns = document.querySelectorAll('.opt');
   btns.forEach(b => b.disabled = true);
-
   userAnswers[current] = idx;
-
   if (idx === q.correct) {
     btns[idx].classList.add('correct');
     score++;
@@ -395,16 +577,15 @@ function pick(idx) {
     btns[idx].classList.add('wrong');
     btns[q.correct].classList.add('reveal');
   }
-
   document.getElementById('expl').innerHTML = `<div class="explanation">${q.explain}</div>`;
   document.getElementById('q-footer').style.display = 'flex';
 }
 
 function nextQ() { current++; renderQ(); }
 
+// ── Results ────────────────────────────────────────────────────
 function showResults() {
-  document.getElementById('page-quiz').classList.remove('active');
-  document.getElementById('page-results').classList.add('active');
+  showPage('page-results');
 
   document.getElementById('res-score').textContent = score;
   document.getElementById('res-denom').textContent = `of ${questions.length}`;
@@ -421,7 +602,6 @@ function showResults() {
     title = "Good start";
     msg = "Security awareness is a skill that grows with practice. Review the answers below — each one represents a real-world risk.";
   }
-
   document.getElementById('res-title').textContent = title;
   document.getElementById('res-msg').textContent = msg;
 
@@ -442,16 +622,151 @@ function showResults() {
       </div>`;
     grid.appendChild(row);
   });
+
+  saveResult(score, userAnswers);
 }
 
-function restart() {
-  current = 0; score = 0; answered = false; userAnswers = [];
-  document.getElementById('page-results').classList.remove('active');
-  document.getElementById('page-quiz').classList.add('active');
-  renderQ();
+// ── Google Sheets ──────────────────────────────────────────────
+function saveResult(sc, answers) {
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({
+      userId,
+      displayName,
+      score: sc,
+      total: questions.length,
+      pct: Math.round((sc / questions.length) * 100),
+      answers
+    })
+  }).catch(() => {});
 }
 
-renderQ();
+async function loadDashboard() {
+  const container = document.getElementById('dash-inner');
+  container.innerHTML = '<div class="dash-loading">Loading results…</div>';
+  try {
+    const res = await fetch(SHEET_URL);
+    if (!res.ok) throw new Error('network error');
+    const rows = await res.json();
+    renderDashboard(rows, container);
+  } catch {
+    container.innerHTML = '<div class="dash-error">Could not load results. Check your connection and try again.</div>';
+  }
+}
+
+// ── Dashboard rendering ────────────────────────────────────────
+function renderDashboard(rows, container) {
+  if (!rows || rows.length <= 1) {
+    container.innerHTML = '<div class="dash-empty">No results yet — be the first to complete the quiz!</div>';
+    return;
+  }
+
+  const data = rows.slice(1).map(r => ({
+    timestamp: r[0],
+    userId:    String(r[1]),
+    name:      String(r[2] || 'Anonymous'),
+    score:     Number(r[3]),
+    total:     Number(r[4]) || questions.length,
+    answers:   [Number(r[6]), Number(r[7]), Number(r[8]), Number(r[9]), Number(r[10])]
+  })).filter(r => !isNaN(r.score));
+
+  if (!data.length) {
+    container.innerHTML = '<div class="dash-empty">No results yet — be the first to complete the quiz!</div>';
+    return;
+  }
+
+  const totalAttempts = data.length;
+  const avgScore      = (data.reduce((s, d) => s + d.score, 0) / totalAttempts).toFixed(1);
+  const perfectPct    = Math.round(data.filter(d => d.score === d.total).length / totalAttempts * 100);
+
+  const qAccuracy = questions.map((q, qi) =>
+    Math.round(data.filter(d => d.answers[qi] === q.correct).length / totalAttempts * 100)
+  );
+
+  // Best score per user
+  const userMap = {};
+  data.forEach(d => {
+    if (!userMap[d.userId]) {
+      userMap[d.userId] = { name: d.name, best: d.score, attempts: 1, last: d.timestamp };
+    } else {
+      const u = userMap[d.userId];
+      if (d.score > u.best) u.best = d.score;
+      u.attempts++;
+      u.name = d.name;
+      u.last = d.timestamp;
+    }
+  });
+
+  const lb = Object.entries(userMap)
+    .map(([id, u]) => ({ id, ...u }))
+    .sort((a, b) => b.best - a.best || a.attempts - b.attempts);
+
+  container.innerHTML = `
+    <div class="dash-section-title">Overview</div>
+    <div class="summary-cards">
+      <div class="summary-card">
+        <div class="summary-val">${totalAttempts}</div>
+        <div class="summary-label">Total attempts</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-val">${avgScore}<span> / 5</span></div>
+        <div class="summary-label">Average score</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-val">${perfectPct}<span>%</span></div>
+        <div class="summary-label">Perfect scores</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-val">${lb.length}</div>
+        <div class="summary-label">Participants</div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">Leaderboard</div>
+    <div class="leaderboard">
+      <div class="lb-row lb-header">
+        <div>#</div><div>Name</div><div>Best</div><div>Tries</div><div>Last attempt</div>
+      </div>
+      ${lb.map((u, i) => {
+        const isMe     = u.id === userId;
+        const scoreClr = u.best === questions.length ? '#4ade80' : u.best >= 3 ? '#f0f0f0' : '#f87171';
+        const dateStr  = u.last ? new Date(u.last).toLocaleDateString() : '—';
+        return `<div class="lb-row${isMe ? ' lb-me' : ''}">
+          <div class="lb-rank">${i + 1}</div>
+          <div class="lb-name">${esc(u.name)}${isMe ? '<span class="you-badge">you</span>' : ''}</div>
+          <div class="lb-score" style="color:${scoreClr}">${u.best} / ${questions.length}</div>
+          <div class="lb-tries">${u.attempts}</div>
+          <div class="lb-date">${dateStr}</div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="dash-section-title">Question accuracy</div>
+    <div class="accuracy-list">
+      ${questions.map((q, i) => {
+        const pct = qAccuracy[i];
+        const clr = pct >= 70 ? '#16a34a' : pct >= 40 ? '#ca8a04' : '#dc2626';
+        return `<div class="accuracy-row">
+          <div class="accuracy-top">
+            <div class="accuracy-q">Q${i + 1}: ${esc(q.q)}</div>
+            <div class="accuracy-pct" style="color:${clr}">${pct}%</div>
+          </div>
+          <div class="accuracy-bar-track">
+            <div class="accuracy-bar-fill" style="width:${pct}%;background:${clr}"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 </script>
 </body>
 </html>
