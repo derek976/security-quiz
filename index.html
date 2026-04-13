@@ -439,7 +439,7 @@
 
 <script>
 const SHEET_URL  = 'https://script.google.com/macros/s/AKfycbzs0rwMsqkQ8UDjCKJJdRaIS3U9BkcmjrXlWJGPvmmt0COYiq77CWNqvL4HpXVCBhiV5g/exec';
-const SHEET_READ = 'https://docs.google.com/spreadsheets/d/1jYRGMXRHlQCctcKHKL-u2lkXnjkqvB_rDC10W57apz8/gviz/tq?tqx=out:json&gid=1572070288';
+const SHEET_READ = 'https://docs.google.com/spreadsheets/d/1jYRGMXRHlQCctcKHKL-u2lkXnjkqvB_rDC10W57apz8/gviz/tq?tqx=out:csv&gid=1572070288';
 
 const questions = [
   {
@@ -651,30 +651,27 @@ async function loadDashboard() {
     const res = await fetch(SHEET_READ);
     if (!res.ok) throw new Error('fetch failed');
     const text = await res.text();
-    // Strip Google's JSONP wrapper: /*O_o*/\ngoogle.visualization.Query.setResponse({...});
-    const json = JSON.parse(text.match(/setResponse\(([\s\S]*)\)/)[1]);
-    const rows = parseGviz(json.table);
+    const rows = parseCSV(text);
+    console.log('Rows fetched:', rows.length, rows);
     renderDashboard(rows, container);
   } catch (err) {
+    console.error('Dashboard error:', err);
     container.innerHTML = '<div class="dash-error">Could not load results. Check your connection and try again.</div>';
   }
 }
 
-function parseGviz(table) {
-  if (!table || !table.rows) return [];
-  const header = table.cols.map(c => c.label);
-  const data = table.rows.map(row =>
-    row.c.map((cell, i) => {
-      if (!cell || cell.v === null) return '';
-      // Dates come as "Date(year,month,day,h,m,s)" — month is 0-indexed
-      if (table.cols[i].type === 'datetime' || table.cols[i].type === 'date') {
-        const m = String(cell.v).match(/Date\((\d+),(\d+),(\d+),?(\d*),?(\d*),?(\d*)\)/);
-        if (m) return new Date(+m[1], +m[2], +m[3], +m[4]||0, +m[5]||0, +m[6]||0).toISOString();
-      }
-      return cell.v;
-    })
-  );
-  return [header, ...data];
+function parseCSV(text) {
+  return text.trim().split('\n').map(line => {
+    const fields = [];
+    let field = '', inQuotes = false;
+    for (const ch of line) {
+      if (ch === '"')          { inQuotes = !inQuotes; }
+      else if (ch === ',' && !inQuotes) { fields.push(field.trim()); field = ''; }
+      else                     { field += ch; }
+    }
+    fields.push(field.trim());
+    return fields;
+  });
 }
 
 // ── Dashboard rendering ────────────────────────────────────────
