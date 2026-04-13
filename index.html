@@ -695,21 +695,20 @@ function renderDashboard(rows, container) {
     return;
   }
 
-  // Best score per user today
-  const userMap = {};
+  // Best score per name
+  const nameMap = {};
   data.forEach(d => {
-    if (!userMap[d.userId]) {
-      userMap[d.userId] = { name: d.name, best: d.score, attempts: 1 };
+    const key = d.name.toLowerCase();
+    if (!nameMap[key]) {
+      nameMap[key] = { name: d.name, userId: d.userId, best: d.score, attempts: 1 };
     } else {
-      const u = userMap[d.userId];
+      const u = nameMap[key];
       if (d.score > u.best) u.best = d.score;
       u.attempts++;
-      u.name = d.name;
     }
   });
 
-  const lb = Object.entries(userMap)
-    .map(([id, u]) => ({ id, ...u }))
+  const lb = Object.values(nameMap)
     .sort((a, b) => b.best - a.best || a.attempts - b.attempts);
 
   const totalAttempts = data.length;
@@ -739,7 +738,7 @@ function renderDashboard(rows, container) {
         <div>#</div><div>Name</div><div>Score</div><div>Tries</div>
       </div>
       ${lb.map((u, i) => {
-        const isMe     = u.id === userId;
+        const isMe     = u.userId === userId;
         const scoreClr = u.best === questions.length ? '#4ade80' : u.best >= 3 ? '#f0f0f0' : '#f87171';
         return `<div class="lb-row${isMe ? ' lb-me' : ''}">
           <div class="lb-rank">${i + 1}</div>
