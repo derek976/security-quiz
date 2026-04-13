@@ -283,7 +283,7 @@
   }
   .lb-row {
     display: grid;
-    grid-template-columns: 36px 1fr 80px 60px 110px;
+    grid-template-columns: 36px 1fr 80px 60px;
     gap: 12px; padding: 13px 20px;
     align-items: center;
     border-bottom: 1px solid #2a2d3a;
@@ -675,6 +675,7 @@ function renderDashboard(rows, container) {
     return;
   }
 
+  const today = new Date().toLocaleDateString();
   const data = rows.slice(1).map(r => ({
     timestamp: r[0],
     userId:    String(r[1]),
@@ -682,32 +683,23 @@ function renderDashboard(rows, container) {
     score:     Number(r[3]),
     total:     Number(r[4]) || questions.length,
     answers:   [Number(r[6]), Number(r[7]), Number(r[8]), Number(r[9]), Number(r[10])]
-  })).filter(r => !isNaN(r.score));
+  })).filter(r => !isNaN(r.score) && new Date(r.timestamp).toLocaleDateString() === today);
 
   if (!data.length) {
-    container.innerHTML = '<div class="dash-empty">No results yet — be the first to complete the quiz!</div>';
+    container.innerHTML = '<div class="dash-empty">No results today yet — be the first to complete the quiz!</div>';
     return;
   }
 
-  const totalAttempts = data.length;
-  const avgScore      = (data.reduce((s, d) => s + d.score, 0) / totalAttempts).toFixed(1);
-  const perfectPct    = Math.round(data.filter(d => d.score === d.total).length / totalAttempts * 100);
-
-  const qAccuracy = questions.map((q, qi) =>
-    Math.round(data.filter(d => d.answers[qi] === q.correct).length / totalAttempts * 100)
-  );
-
-  // Best score per user
+  // Best score per user today
   const userMap = {};
   data.forEach(d => {
     if (!userMap[d.userId]) {
-      userMap[d.userId] = { name: d.name, best: d.score, attempts: 1, last: d.timestamp };
+      userMap[d.userId] = { name: d.name, best: d.score, attempts: 1 };
     } else {
       const u = userMap[d.userId];
       if (d.score > u.best) u.best = d.score;
       u.attempts++;
       u.name = d.name;
-      u.last = d.timestamp;
     }
   });
 
@@ -715,12 +707,16 @@ function renderDashboard(rows, container) {
     .map(([id, u]) => ({ id, ...u }))
     .sort((a, b) => b.best - a.best || a.attempts - b.attempts);
 
+  const totalAttempts = data.length;
+  const avgScore      = (data.reduce((s, d) => s + d.score, 0) / totalAttempts).toFixed(1);
+  const perfectPct    = Math.round(data.filter(d => d.score === d.total).length / totalAttempts * 100);
+
   container.innerHTML = `
-    <div class="dash-section-title">Overview</div>
+    <div class="dash-section-title">Today's overview</div>
     <div class="summary-cards">
       <div class="summary-card">
-        <div class="summary-val">${totalAttempts}</div>
-        <div class="summary-label">Total attempts</div>
+        <div class="summary-val">${lb.length}</div>
+        <div class="summary-label">Participants</div>
       </div>
       <div class="summary-card">
         <div class="summary-val">${avgScore}<span> / 5</span></div>
@@ -730,44 +726,21 @@ function renderDashboard(rows, container) {
         <div class="summary-val">${perfectPct}<span>%</span></div>
         <div class="summary-label">Perfect scores</div>
       </div>
-      <div class="summary-card">
-        <div class="summary-val">${lb.length}</div>
-        <div class="summary-label">Participants</div>
-      </div>
     </div>
 
-    <div class="dash-section-title">Leaderboard</div>
+    <div class="dash-section-title">Today's scores</div>
     <div class="leaderboard">
       <div class="lb-row lb-header">
-        <div>#</div><div>Name</div><div>Best</div><div>Tries</div><div>Last attempt</div>
+        <div>#</div><div>Name</div><div>Score</div><div>Tries</div>
       </div>
       ${lb.map((u, i) => {
         const isMe     = u.id === userId;
         const scoreClr = u.best === questions.length ? '#4ade80' : u.best >= 3 ? '#f0f0f0' : '#f87171';
-        const dateStr  = u.last ? new Date(u.last).toLocaleDateString() : '—';
         return `<div class="lb-row${isMe ? ' lb-me' : ''}">
           <div class="lb-rank">${i + 1}</div>
           <div class="lb-name">${esc(u.name)}${isMe ? '<span class="you-badge">you</span>' : ''}</div>
           <div class="lb-score" style="color:${scoreClr}">${u.best} / ${questions.length}</div>
           <div class="lb-tries">${u.attempts}</div>
-          <div class="lb-date">${dateStr}</div>
-        </div>`;
-      }).join('')}
-    </div>
-
-    <div class="dash-section-title">Question accuracy</div>
-    <div class="accuracy-list">
-      ${questions.map((q, i) => {
-        const pct = qAccuracy[i];
-        const clr = pct >= 70 ? '#16a34a' : pct >= 40 ? '#ca8a04' : '#dc2626';
-        return `<div class="accuracy-row">
-          <div class="accuracy-top">
-            <div class="accuracy-q">Q${i + 1}: ${esc(q.q)}</div>
-            <div class="accuracy-pct" style="color:${clr}">${pct}%</div>
-          </div>
-          <div class="accuracy-bar-track">
-            <div class="accuracy-bar-fill" style="width:${pct}%;background:${clr}"></div>
-          </div>
         </div>`;
       }).join('')}
     </div>
